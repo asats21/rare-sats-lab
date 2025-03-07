@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom'; // Added for the back button
 import './App.css';
 
 const BLOCKS = 210000;
@@ -107,6 +108,7 @@ function ConsoleNumbers() {
         <span>> </span>
         <button onClick={start} disabled={isRunning}>[Start]</button>
         <button onClick={downloadCSV} disabled={isRunning || foundCount === 0}>[Download CSV]</button>
+        <Link to="/" className="console-link">[Back]</Link>
       </div>
     </div>
   );
