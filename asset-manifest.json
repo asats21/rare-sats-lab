@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.css": "/rare-sats-lab/static/css/main.31d6cfe0.css",
+    "main.js": "/rare-sats-lab/static/js/main.7204f941.js",
+    "index.html": "/rare-sats-lab/index.html",
+    "main.7204f941.js.map": "/rare-sats-lab/static/js/main.7204f941.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.31d6cfe0.css",
+    "static/js/main.7204f941.js"
+  ]
+}
