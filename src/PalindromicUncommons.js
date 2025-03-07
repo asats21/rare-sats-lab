@@ -1,28 +1,51 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 const BLOCKS = 210000;
 const MAX_HALVINGS = 34;
+const TOTAL_BLOCKS = BLOCKS * MAX_HALVINGS;
 
 function PalindromicUncommons() {
-  const [results, setResults] = useState('');
+  const [results, setResults] = useState([]);
   const [total, setTotal] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const consoleRef = useRef(null);
+
+  // Scroll to the bottom whenever results update
+  useEffect(() => {
+    if (consoleRef.current) {
+      consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+    }
+  }, [results]);
 
   const findPalindromicUncommons = () => {
-    let palins = [];
-    let totalBlocks = BLOCKS * MAX_HALVINGS; // Precomputed block limit
+    setIsRunning(true);
+    setResults([]);
+    setTotal(0);
+    const chunkSize = 10000;
+    processChunk(0, chunkSize);
+  };
 
-    for (let block = 0; block < totalBlocks; block++) {
+  const processChunk = (startBlock, chunkSize) => {
+    const endBlock = Math.min(startBlock + chunkSize, TOTAL_BLOCKS);
+    let newPalins = [];
+    for (let block = startBlock; block < endBlock; block++) {
       let uncommon = getBlockUncommon(block);
       if (checkUncommonPali(uncommon)) {
-        palins.push(uncommon);
+        newPalins.push(uncommon);
       }
     }
-
-    setTotal(palins.length);
-    setResults(palins.join('\n')); // Efficiently update state
+    if (newPalins.length > 0) {
+      setResults((prev) => [...prev, ...newPalins]);
+    }
+    setTotal((prev) => prev + newPalins.length);
+    if (endBlock < TOTAL_BLOCKS) {
+      setTimeout(() => processChunk(endBlock, chunkSize), 0);
+    } else {
+      setIsRunning(false);
+    }
   };
 
   function getBlockUncommon(block) {
@@ -60,16 +83,21 @@ function PalindromicUncommons() {
       </header>
 
       <div className="container text-center">
-        <button className="btn btn-primary mb-3" onClick={findPalindromicUncommons}>
-          Run Experiment
-        </button>
-        <p>Total Found: {total}</p>
-        <textarea
-          className="form-control bg-dark text-white"
-          rows="10"
-          value={results}
-          readOnly
-        />
+        <div className="d-flex justify-content-between mb-3 align-items-center">
+          <button
+            className="btn btn-primary"
+            onClick={findPalindromicUncommons}
+            disabled={isRunning}
+          >
+            {isRunning ? 'Running...' : 'Run Experiment'}
+          </button>
+          <p className="mb-0">Found: {total}</p>
+        </div>
+        <div className="console-output" ref={consoleRef}>
+          {results.map((result, index) => (
+            <div key={index}>{result}</div>
+          ))}
+        </div>
         <div className="mt-3">
           <Link to="/" className="btn btn-secondary">Back to Main</Link>
         </div>

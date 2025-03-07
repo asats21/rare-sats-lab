@@ -1,0 +1,9 @@
+.console-output {
+    height: 400px;
+    overflow-y: auto;
+    background-color: #222;
+    color: #fff;
+    padding: 10px;
+    font-family: monospace;
+    text-align: left;
+}
