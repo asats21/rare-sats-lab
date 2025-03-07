@@ -1,22 +1,21 @@
 import { Link } from 'react-router-dom';
+import './App.css';
 
 function MainPage() {
   return (
-    <div className="App bg-black text-white min-vh-100">
-      <header className="text-center py-4">
-        <h1 className="fw-bold">Rare Sats Lab</h1>
-      </header>
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-md-4">
-            <div className="card bg-dark text-white border-light">
-              <div className="card-body">
-                <h5 className="card-title">Palindromic Uncommons</h5>
-                <p className="card-text">Explore uncommon satoshis with palindromic properties.</p>
-                <Link to="/palindromic-uncommons" className="btn btn-primary">View Experiment</Link>
-              </div>
-            </div>
-          </div>
+    <div className="console">
+      <div className="console-output">
+        <div className="console-line console-header">
+          > Rare Sats Lab
+        </div>
+        <div className="console-line">
+          > Experiments:
+        </div>
+        <div className="console-line">
+          > <Link to="/palindromic-uncommons" className="console-link">[Palindromic Uncommons]</Link> - Explore uncommon satoshis with palindromic properties.
+        </div>
+        <div className="console-line">
+          <span className="blinking-cursor">_</span>
         </div>
       </div>
     </div>

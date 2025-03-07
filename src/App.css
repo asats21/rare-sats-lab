@@ -1,46 +1,65 @@
 .console {
-    background-color: #000;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .console-output {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-    font-family: 'Courier New', monospace;
-    font-size: 1.2rem;
-    color: #0f0;
-  }
-  
-  .controls {
-    padding: 10px;
-    border-top: 1px solid #0f0;
-    color: #0f0;
-    font-family: 'Courier New', monospace;
-    font-size: 1.2rem;
-  }
-  
-  .controls button {
-    background: none;
-    border: none;
-    color: #0f0;
-    cursor: pointer;
-    padding: 0;
-    margin: 0 10px;
-  }
-  
-  .controls button:disabled {
-    color: #555;
-  }
-  
-  .blinking-cursor {
-    animation: blink 0.8s step-end infinite;
-  }
-  
-  @keyframes blink {
-    50% { opacity: 0; }
-  }
+  background-color: #000;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.console-output {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  color: #0f0;
+}
+
+.console-line {
+  margin-bottom: 5px;
+}
+
+.console-header {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.console-link {
+  color: #0f0;
+  text-decoration: none;
+}
+
+.console-link:hover {
+  text-decoration: underline;
+}
+
+.controls {
+  padding: 10px;
+  border-top: 1px solid #0f0;
+  color: #0f0;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+}
+
+.controls button {
+  background: none;
+  border: none;
+  color: #0f0;
+  cursor: pointer;
+  padding: 0;
+  margin: 0 10px;
+}
+
+.controls button:disabled {
+  color: #555;
+}
+
+.blinking-cursor {
+  animation: blink 0.8s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
