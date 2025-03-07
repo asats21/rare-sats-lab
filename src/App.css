@@ -7,3 +7,11 @@
     font-family: monospace;
     text-align: left;
 }
+
+.found-count {
+    font-size: 1.2rem; /* Larger text */
+    font-weight: bold; /* Bold for emphasis */
+    padding: 5px 10px; /* Spacing */
+    background-color: #333; /* Subtle background */
+    border-radius: 5px; /* Rounded corners */
+}

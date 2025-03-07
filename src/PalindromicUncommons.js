@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FaPlay, FaDownload } from 'react-icons/fa'; // Import icons
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -14,7 +15,6 @@ function PalindromicUncommons() {
   const [isFinished, setIsFinished] = useState(false);
   const consoleRef = useRef(null);
 
-  // Scroll to bottom when results update
   useEffect(() => {
     if (consoleRef.current) {
       consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
@@ -24,8 +24,8 @@ function PalindromicUncommons() {
   const findPalindromicUncommons = () => {
     setIsRunning(true);
     setIsFinished(false);
-    setResults([]); // Clear old results
-    setTotal(0);   // Reset total
+    setResults([]);
+    setTotal(0);
     const chunkSize = 10000;
     processChunk(0, chunkSize);
   };
@@ -47,7 +47,7 @@ function PalindromicUncommons() {
       setTimeout(() => processChunk(endBlock, chunkSize), 0);
     } else {
       setIsRunning(false);
-      setIsFinished(true); // Mark as finished
+      setIsFinished(true);
     }
   };
 
@@ -65,7 +65,7 @@ function PalindromicUncommons() {
       currentBlock += halvingBlocks;
       reward /= 2;
     }
-    return 0; // Should never reach this
+    return 0;
   }
 
   function palindromeCheck(numStr) {
@@ -74,8 +74,8 @@ function PalindromicUncommons() {
   }
 
   function checkUncommonPali(satNum) {
-    if (satNum % 10 !== 0) return false; // Ends in zero check
-    let numStr = satNum.toString().replace(/0+$/, ""); // Remove trailing zeros
+    if (satNum % 10 !== 0) return false;
+    let numStr = satNum.toString().replace(/0+$/, "");
     return palindromeCheck(numStr);
   }
 
@@ -103,14 +103,18 @@ function PalindromicUncommons() {
             onClick={findPalindromicUncommons}
             disabled={isRunning}
           >
+            <FaPlay className="me-2" /> {/* Play icon */}
             {isRunning ? 'Running...' : isFinished ? 'Finished' : 'Run Experiment'}
           </button>
-          <p className="mb-0">Found: {total}</p>
-          {isFinished && (
-            <button className="btn btn-outline-light" onClick={downloadCSV}>
-              Download CSV
-            </button>
-          )}
+          <p className="found-count mb-0">Found: {total}</p>
+          <button
+            className="btn btn-outline-light"
+            onClick={downloadCSV}
+            disabled={!isFinished}
+          >
+            <FaDownload className="me-2" /> {/* Download icon */}
+            Download CSV
+          </button>
         </div>
         <div className="console-output" ref={consoleRef}>
           {results.map((result, index) => (
