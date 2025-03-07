@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
 
 const BLOCKS = 210000;
 const MAX_HALVINGS = 34;
