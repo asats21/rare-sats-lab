@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 const BLOCKS = 210000;
 const MAX_HALVINGS = 34;
@@ -9,9 +11,10 @@ function PalindromicUncommons() {
   const [results, setResults] = useState([]);
   const [total, setTotal] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
   const consoleRef = useRef(null);
 
-  // Scroll to the bottom whenever results update
+  // Scroll to bottom when results update
   useEffect(() => {
     if (consoleRef.current) {
       consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
@@ -20,8 +23,9 @@ function PalindromicUncommons() {
 
   const findPalindromicUncommons = () => {
     setIsRunning(true);
-    setResults([]);
-    setTotal(0);
+    setIsFinished(false);
+    setResults([]); // Clear old results
+    setTotal(0);   // Reset total
     const chunkSize = 10000;
     processChunk(0, chunkSize);
   };
@@ -43,6 +47,7 @@ function PalindromicUncommons() {
       setTimeout(() => processChunk(endBlock, chunkSize), 0);
     } else {
       setIsRunning(false);
+      setIsFinished(true); // Mark as finished
     }
   };
 
@@ -74,6 +79,17 @@ function PalindromicUncommons() {
     return palindromeCheck(numStr);
   }
 
+  const downloadCSV = () => {
+    const csvContent = "data:text/csv;charset=utf-8," + results.join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "palindromic_uncommons.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="App bg-black text-white min-vh-100">
       <header className="text-center py-4">
@@ -83,13 +99,18 @@ function PalindromicUncommons() {
       <div className="container text-center">
         <div className="d-flex justify-content-between mb-3 align-items-center">
           <button
-            className="btn btn-primary"
+            className={`btn ${isFinished ? 'btn-success' : 'btn-primary'}`}
             onClick={findPalindromicUncommons}
             disabled={isRunning}
           >
-            {isRunning ? 'Running...' : 'Run Experiment'}
+            {isRunning ? 'Running...' : isFinished ? 'Finished' : 'Run Experiment'}
           </button>
           <p className="mb-0">Found: {total}</p>
+          {isFinished && (
+            <button className="btn btn-outline-light" onClick={downloadCSV}>
+              Download CSV
+            </button>
+          )}
         </div>
         <div className="console-output" ref={consoleRef}>
           {results.map((result, index) => (
