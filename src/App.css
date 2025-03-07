@@ -1,17 +1,46 @@
-.console-output {
-    height: 400px;
-    overflow-y: auto;
+.console {
     background-color: #000;
-    color: #fff;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .console-output {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    color: #0f0;
+  }
+  
+  .controls {
     padding: 10px;
-    font-family: monospace;
-    text-align: left;
-}
-
-.found-count {
-    font-size: 1.2rem; /* Larger text */
-    font-weight: bold; /* Bold for emphasis */
-    padding: 5px 10px; /* Spacing */
-    background-color: #333; /* Subtle background */
-    border-radius: 5px; /* Rounded corners */
-}
+    border-top: 1px solid #0f0;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+  }
+  
+  .controls button {
+    background: none;
+    border: none;
+    color: #0f0;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 10px;
+  }
+  
+  .controls button:disabled {
+    color: #555;
+  }
+  
+  .blinking-cursor {
+    animation: blink 0.8s step-end infinite;
+  }
+  
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
