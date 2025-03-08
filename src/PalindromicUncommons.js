@@ -30,7 +30,7 @@ function ConsoleNumbers() {
   };
 
   const downloadCSV = () => {
-    const numbers = results.filter((item) => typeof item === 'number');
+    const numbers = results.filter((item) => typeof item === 'number' || item.sat).map((item) => (typeof item === 'number' ? item : item.sat));
     const csvContent = "data:text/csv;charset=utf-8," + numbers.join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -51,7 +51,11 @@ function ConsoleNumbers() {
     for (let block = startBlock; block < endBlock; block++) {
       let uncommon = getBlockUncommon(block);
       if (checkUncommonPali(uncommon) && (!isPaliBlockOnly || palindromeCheck(block))) {
-        newPalins.push(uncommon);
+        if (isPaliBlockOnly) {
+          newPalins.push({ sat: uncommon, block: block });
+        } else {
+          newPalins.push(uncommon);
+        }
       }
     }
     if (newPalins.length > 0) {
@@ -64,7 +68,7 @@ function ConsoleNumbers() {
       setIsRunning(false);
       setResults((prev) => {
         const finalResults = newPalins.length > 0 ? [...prev, ...newPalins] : prev;
-        const count = finalResults.filter((item) => typeof item === 'number').length;
+        const count = finalResults.filter((item) => typeof item === 'number' || item.sat).length;
         return [...finalResults, `> Experiment finished. Found ${count} numbers.`];
       });
     }
@@ -103,7 +107,13 @@ function ConsoleNumbers() {
       <div className="console-output" ref={consoleRef}>
         {results.map((result, index) => (
           <div key={index} className="console-line">
-            > {typeof result === 'string' ? result : result}
+            > {typeof result === 'string' ? (
+              result
+            ) : result.sat ? (
+              `${result.sat}  [Block: ${result.block}]`
+            ) : (
+              result
+            )}
           </div>
         ))}
         <div className="console-line">
