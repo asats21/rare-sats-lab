@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'; // Added for the back button
 import './App.css';
 
 const BLOCKS = 210000;
-const MAX_HALVINGS = 34;
+const MAX_HALVINGS = 33;
 const TOTAL_BLOCKS = BLOCKS * MAX_HALVINGS;
 
 function ConsoleNumbers() {
