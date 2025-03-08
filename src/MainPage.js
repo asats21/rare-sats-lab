@@ -18,6 +18,9 @@ function MainPage() {
           > <Link to="/prime-black-uncommons" className="console-link">[Prime Black Uncommons]</Link> - Explore prime black uncommon satoshis.
         </div>
         <div className="console-line">
+          > <Link to="/test-prime-wasm" className="console-link">[Test WASM is_prime]</Link> - Test the WASM is_prime function.
+        </div>
+        <div className="console-line">
           <span className="blinking-cursor">_</span>
         </div>
       </div>
