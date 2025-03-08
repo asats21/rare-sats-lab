@@ -52,16 +52,16 @@
   margin: 0 10px;
 }
 
+.controls button:hover {
+  text-decoration: underline;
+}
+
 .controls button:disabled {
   color: #555;
 }
 
 .blinking-cursor {
   animation: blink 0.8s step-end infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
 }
 
 .console-toggle {
@@ -73,3 +73,14 @@
   color: #555;
   margin: 0 10px;
 }
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@media (max-width: 768px) {
+  .controls {
+    padding: 20px 10px 10px; /* More top padding, less bottom */
+  }
+}
+
