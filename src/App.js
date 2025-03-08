@@ -1,6 +1,7 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPage from './MainPage';
 import PalindromicUncommons from './PalindromicUncommons';
+import PrimeUncommons from './PrimeUncommons';
 import PrimeBlackUncommons from './PrimeBlackUncommons';
 import TestPrimeWasm from './TestPrimeWasm'; // Adjust the path if necessary
 
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/palindromic-uncommons" element={<PalindromicUncommons />} />
+        <Route path="/prime-uncommons" element={<PrimeUncommons />} />
         <Route path="/prime-black-uncommons" element={<PrimeBlackUncommons />} />
         <Route path="/test-prime-wasm" element={<TestPrimeWasm />} />
       </Routes>

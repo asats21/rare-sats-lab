@@ -15,6 +15,9 @@ function MainPage() {
           > <Link to="/palindromic-uncommons" className="console-link">[Palindromic Uncommons]</Link> - Explore uncommon satoshis with palindromic properties.
         </div>
         <div className="console-line">
+          > <Link to="/prime-uncommons" className="console-link">[Prime Uncommons]</Link> - Explore prime uncommon satoshis.
+        </div>
+        <div className="console-line">
           > <Link to="/prime-black-uncommons" className="console-link">[Prime Black Uncommons]</Link> - Explore prime black uncommon satoshis.
         </div>
         <div className="console-line">
