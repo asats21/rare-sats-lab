@@ -9,6 +9,7 @@ const TOTAL_BLOCKS = BLOCKS * MAX_HALVINGS;
 function ConsoleNumbers() {
   const [results, setResults] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
+  const [isPaliBlockOnly, setIsPaliBlockOnly] = useState(false);
   const [foundCount, setFoundCount] = useState(0);
   const consoleRef = useRef(null);
 
@@ -40,12 +41,16 @@ function ConsoleNumbers() {
     document.body.removeChild(link);
   };
 
+  const togglePaliBlock = () => {
+    if (!isRunning) setIsPaliBlockOnly((prev) => !prev);
+  };
+
   const processChunk = (startBlock, chunkSize) => {
     const endBlock = Math.min(startBlock + chunkSize, TOTAL_BLOCKS);
     let newPalins = [];
     for (let block = startBlock; block < endBlock; block++) {
       let uncommon = getBlockUncommon(block);
-      if (checkUncommonPali(uncommon)) {
+      if (checkUncommonPali(uncommon) && (!isPaliBlockOnly || palindromeCheck(block))) {
         newPalins.push(uncommon);
       }
     }
@@ -81,7 +86,8 @@ function ConsoleNumbers() {
     return 0;
   }
 
-  function palindromeCheck(numStr) {
+  function palindromeCheck(num) {
+    const numStr = String(num); // Force it to a string, even if it’s a number or undefined
     if (!numStr || numStr === '0') return false;
     return numStr === numStr.split('').reverse().join('');
   }
@@ -105,10 +111,13 @@ function ConsoleNumbers() {
         </div>
       </div>
       <div className="controls">
-        <span>> </span>
-        <button onClick={start} disabled={isRunning}>[Start]</button>
-        <button onClick={downloadCSV} disabled={isRunning || foundCount === 0}>[Download CSV]</button>
-        <Link to="/" className="console-link">[Back]</Link>
+      <span>> </span>
+      <button onClick={start} disabled={isRunning}>[Start]</button>
+      <span onClick={togglePaliBlock} className={isRunning ? "disabled" : "console-toggle"}>
+        {isPaliBlockOnly ? '[X]' : '[_]'} PaliBlock
+      </span>
+      <button onClick={downloadCSV} disabled={isRunning || foundCount === 0}>[Download CSV]</button>
+      <Link to="/" className="console-link">[Back]</Link>
       </div>
     </div>
   );

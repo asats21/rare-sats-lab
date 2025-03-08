@@ -63,3 +63,13 @@
 @keyframes blink {
   50% { opacity: 0; }
 }
+
+.console-toggle {
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.disabled {
+  color: #555;
+  margin: 0 10px;
+}
