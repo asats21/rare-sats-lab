@@ -133,7 +133,7 @@ function ConsoleNumbers() {
           </div>
         ))}
       
-        {tick && null} {/* Dummy use to silence ESLint */}
+        {tick > -1 && null} {/* Dummy use to silence ESLint */}
 
         <div className="console-line">
           {isRunning && lastNumberTime !== null && Date.now() - lastNumberTime > 1000 ? (
