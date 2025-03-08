@@ -32,8 +32,16 @@
   text-decoration: none;
 }
 
-.console-link:hover {
-  text-decoration: underline;
+@media (max-width: 768px) {
+  .console-link {
+    text-decoration: underline;
+  }
+}
+
+@media (min-width: 769px) {
+  .console-link:hover {
+    text-decoration: underline;
+  }
 }
 
 .controls {
