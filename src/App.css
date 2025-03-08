@@ -83,7 +83,7 @@
   .controls {
     padding: 10px; /* Keep it simple */
     position: sticky;
-    bottom: 30px; /* Stick it near the bottom, but visible */
+    bottom: 50px; /* Stick it near the bottom, but visible */
     background: #000; /* Cover any overlap */
   }
 }
