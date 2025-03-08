@@ -119,9 +119,13 @@ function ConsoleNumbers() {
             )}
           </div>
         ))}
-        <div className="console-line">
+      <div className="console-line">
+        {isRunning ? (
+          <span className="blinking-cursor">In Progress</span>
+        ) : (
           <span className="blinking-cursor">_</span>
-        </div>
+        )}
+      </div>
       </div>
       <div className="controls">
       <span>> </span>
