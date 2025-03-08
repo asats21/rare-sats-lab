@@ -1,15 +1,14 @@
 use wasm_bindgen::prelude::*;
 
-// Fast modular exponentiation
 fn mod_pow(mut base: u64, mut exp: u64, modulus: u64) -> u64 {
-    let mut result = 1;
+    let mut result = 1u64;
     base %= modulus;
     while exp > 0 {
         if exp & 1 == 1 {
-            result = (result * base) % modulus;
+            result = (result as u128 * base as u128 % modulus as u128) as u64;
         }
         exp >>= 1;
-        base = (base * base) % modulus;
+        base = (base as u128 * base as u128 % modulus as u128) as u64;
     }
     result
 }
@@ -44,7 +43,7 @@ pub fn is_prime(n: u64) -> bool {
         s += 1;
     }
 
-    let bases = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37];
+    let bases = [2, 325, 9375, 28178, 450775, 9780504, 1795265022];
     for &a in bases.iter() {
         if a >= n {
             continue;
@@ -67,4 +66,41 @@ pub fn is_prime(n: u64) -> bool {
         }
     }
     true
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_small_primes() {
+        assert!(is_prime(2));
+        assert!(is_prime(3));
+        assert!(is_prime(5));
+        assert!(is_prime(7));
+        assert!(is_prime(11));
+    }
+
+    #[test]
+    fn test_small_composites() {
+        assert!(!is_prime(1));
+        assert!(!is_prime(4));
+        assert!(!is_prime(6));
+        assert!(!is_prime(8));
+        assert!(!is_prime(9));
+        assert!(!is_prime(10));
+    }
+
+    #[test]
+    fn test_large_primes() {
+        assert!(is_prime(999999999989));  // Known large prime
+        assert!(is_prime(138364999999999)); // Known large prime    
+    }
+
+    #[test]
+    fn test_large_composites() {
+        assert!(!is_prime(10000));
+        assert!(!is_prime(123456));
+        assert!(!is_prime(999961000033)); // Large composite
+    }
 }
