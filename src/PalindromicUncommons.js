@@ -10,6 +10,8 @@ function ConsoleNumbers() {
   const [results, setResults] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
   const [isPaliBlockOnly, setIsPaliBlockOnly] = useState(false);
+  const [lastNumberTime, setLastNumberTime] = useState(null);
+  const [tick, setTick] = useState(0);
   const [foundCount, setFoundCount] = useState(0);
   const consoleRef = useRef(null);
 
@@ -19,6 +21,16 @@ function ConsoleNumbers() {
       consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
     }
   }, [results]);
+
+  useEffect(() => {
+    let interval;
+    if (isRunning) {
+      interval = setInterval(() => {
+        setTick((prev) => prev + 1); // Force re-render every 100ms
+      }, 100);
+    }
+    return () => clearInterval(interval);
+  }, [isRunning]);
 
   const start = () => {
     if (isRunning) return;
@@ -64,6 +76,7 @@ function ConsoleNumbers() {
     if (newPalins.length > 0) {
       setResults((prev) => [...prev, ...newPalins]);
       setFoundCount((prev) => prev + newPalins.length);
+      setLastNumberTime(Date.now()); // Record time when numbers are added
     }
     if (endBlock < TOTAL_BLOCKS) {
       setTimeout(() => processChunk(endBlock, chunkSize), 0);
@@ -119,13 +132,16 @@ function ConsoleNumbers() {
             )}
           </div>
         ))}
-      <div className="console-line">
-        {isRunning ? (
-          <span className="blinking-cursor">In Progress</span>
-        ) : (
-          <span className="blinking-cursor">_</span>
-        )}
-      </div>
+      
+        {tick && null} {/* Dummy use to silence ESLint */}
+
+        <div className="console-line">
+          {isRunning && lastNumberTime !== null && Date.now() - lastNumberTime > 1000 ? (
+            <span className="blinking-cursor">In Progress</span>
+          ) : (
+            <span className="blinking-cursor">_</span>
+          )}
+        </div>
       </div>
       <div className="controls">
       <span>> </span>
