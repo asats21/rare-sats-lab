@@ -23,6 +23,9 @@ function MainPage() {
         <div className="console-line">
           <span className="blinking-cursor">_</span>
         </div>
+        <div className="console-line console-footer">
+          > (C) Joking, there isn't one. TBH it’s more (Bitcoin) art than app. Have fun.
+        </div>
       </div>
     </div>
   );

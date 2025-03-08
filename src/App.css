@@ -88,6 +88,12 @@
   margin-left: 10px;
 }
 
+.console-footer {
+  font-size: 0.9em; /* Slightly smaller, like old copyright footers */
+  opacity: 0.8; /* Subtle fade for that retro feel */
+  margin-top: 20px; /* Space it out from the cursor */
+}
+
 @keyframes blink {
   50% { opacity: 0; }
 }
