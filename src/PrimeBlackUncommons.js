@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
 
@@ -16,7 +16,7 @@ function PrimeBlackUncommons() {
   const [tick, setTick] = useState(0);
   const consoleRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (consoleRef.current) {
       consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
     }
@@ -37,7 +37,7 @@ function PrimeBlackUncommons() {
     setResults(["> Starting experiment..."]);
     setFoundCount(0);
     setIsRunning(true);
-    setStartTime(Date.now()); // Record start time
+    setStartTime(Date.now());
     const chunkSize = 10000;
     processChunk(0, chunkSize);
   };
@@ -57,7 +57,7 @@ function PrimeBlackUncommons() {
   const processChunk = (startBlock, chunkSize) => {
     const endBlock = Math.min(startBlock + chunkSize, TOTAL_BLOCKS);
     let newPrimes = [];
-    for (let block = startBlock; block < endBlock; block++) { // No Math.max
+    for (let block = startBlock; block < endBlock; block++) {
       let uncommon = getBlockUncommon(block);
       let blackSat = Math.floor(uncommon) - 1;
       let blackBlock = block - 1;
