@@ -178,9 +178,7 @@ function PrimeBlackUncommons() {
   function isPrime(n) {
     if (!isWasmLoaded) return false;
     if (n < 0) return false;
-    // eslint-disable-next-line no-undef
-    const bigIntNum = BigInt(n);
-    return is_prime(bigIntNum);
+    return is_prime(n);
   }
 
   const toggleOmega = () => {

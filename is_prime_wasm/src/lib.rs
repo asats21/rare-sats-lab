@@ -15,7 +15,8 @@ fn mod_pow(mut base: u64, mut exp: u64, modulus: u64) -> u64 {
 
 // Miller-Rabin primality test
 #[wasm_bindgen]
-pub fn is_prime(n: u64) -> bool {
+pub fn is_prime(n: f64) -> bool {
+    let n = n as u64; // Convert safely
     if n < 2 {
         return false;
     }
@@ -74,33 +75,33 @@ mod tests {
 
     #[test]
     fn test_small_primes() {
-        assert!(is_prime(2));
-        assert!(is_prime(3));
-        assert!(is_prime(5));
-        assert!(is_prime(7));
-        assert!(is_prime(11));
+        assert!(is_prime(2.0));
+        assert!(is_prime(3.0));
+        assert!(is_prime(5.0));
+        assert!(is_prime(7.0));
+        assert!(is_prime(11.0));
     }
 
     #[test]
     fn test_small_composites() {
-        assert!(!is_prime(1));
-        assert!(!is_prime(4));
-        assert!(!is_prime(6));
-        assert!(!is_prime(8));
-        assert!(!is_prime(9));
-        assert!(!is_prime(10));
+        assert!(!is_prime(1.0));
+        assert!(!is_prime(4.0));
+        assert!(!is_prime(6.0));
+        assert!(!is_prime(8.0));
+        assert!(!is_prime(9.0));
+        assert!(!is_prime(10.0));
     }
 
     #[test]
     fn test_large_primes() {
-        assert!(is_prime(999999999989));  // Known large prime
-        assert!(is_prime(138364999999999)); // Known large prime    
+        assert!(is_prime(999999999989.0));  // Known large prime
+        assert!(is_prime(138364999999999.0)); // Known large prime    
     }
 
     #[test]
     fn test_large_composites() {
-        assert!(!is_prime(10000));
-        assert!(!is_prime(123456));
-        assert!(!is_prime(999961000033)); // Large composite
+        assert!(!is_prime(10000.0));
+        assert!(!is_prime(123456.0));
+        assert!(!is_prime(999961000033.0)); // Large composite
     }
 }

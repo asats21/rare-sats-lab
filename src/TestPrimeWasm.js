@@ -32,9 +32,7 @@ function TestPrimeWasm() {
       setResult('> Enter a number');
       return;
     }
-    // eslint-disable-next-line no-undef
-    const num = BigInt(number);
-    const prime = is_prime(num);
+    const prime = is_prime(number);
     setResult(`> ${number} is ${prime ? 'Prime' : 'Not Prime'}`);
   };
 
