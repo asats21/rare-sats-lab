@@ -12,6 +12,7 @@ function PrimeBlackUncommons() {
   const [foundCount, setFoundCount] = useState(0);
   const [isOmegaOnly, setIsOmegaOnly] = useState(false);
   const [startTime, setStartTime] = useState(null);
+  const [currentBlock, setCurrentBlock] = useState(0);
   const [lastNumberTime, setLastNumberTime] = useState(null);
   const [tick, setTick] = useState(0);
   const consoleRef = useRef(null);
@@ -38,6 +39,7 @@ function PrimeBlackUncommons() {
     setFoundCount(0);
     setIsRunning(true);
     setStartTime(Date.now());
+    setCurrentBlock(0); // Reset to 0
     const chunkSize = 10000;
     processChunk(0, chunkSize);
   };
@@ -75,6 +77,7 @@ function PrimeBlackUncommons() {
       setFoundCount((prev) => prev + newPrimes.length);
       setLastNumberTime(Date.now());
     }
+    setCurrentBlock(endBlock); // Update current block
     if (endBlock < TOTAL_BLOCKS) {
       setTimeout(() => processChunk(endBlock, chunkSize), 0);
     } else {
@@ -241,6 +244,9 @@ function PrimeBlackUncommons() {
         {startTime && (
           <span className="time-elapsed">
             Elapsed: {Math.floor((Date.now() - startTime) / 1000)}s
+            {currentBlock > 0 && (
+              <> | Left: {Math.floor(((Date.now() - startTime) / currentBlock) * (TOTAL_BLOCKS - currentBlock) / 1000)}s</>
+            )}
           </span>
         )}
       </div>
