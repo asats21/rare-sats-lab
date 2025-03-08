@@ -30,7 +30,10 @@ function ConsoleNumbers() {
   };
 
   const downloadCSV = () => {
-    const numbers = results.filter((item) => typeof item === 'number' || item.sat).map((item) => (typeof item === 'number' ? item : item.sat));
+    const numbers = results.filter((item) => typeof item === 'number' || item.sat).map((item) => {
+      if (typeof item === 'number') return item;
+      return `${item.sat};${item.block}`;
+    });
     const csvContent = "data:text/csv;charset=utf-8," + numbers.join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
