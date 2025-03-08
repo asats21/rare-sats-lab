@@ -8,7 +8,8 @@
 }
 
 .console-output {
-  flex: 1;
+  flex: 1 1 auto; /* Allow it to shrink if needed */
+  max-height: calc(100vh - 60px); /* Leave room for controls */
   overflow-y: auto;
   padding: 20px;
   font-family: 'Courier New', monospace;
@@ -80,7 +81,9 @@
 
 @media (max-width: 768px) {
   .controls {
-    padding: 20px 10px 10px; /* More top padding, less bottom */
+    padding: 10px; /* Keep it simple */
+    position: sticky;
+    bottom: 10px; /* Stick it near the bottom, but visible */
+    background: #000; /* Cover any overlap */
   }
 }
-
