@@ -11,6 +11,7 @@ function PrimeBlackUncommons() {
   const [isRunning, setIsRunning] = useState(false);
   const [foundCount, setFoundCount] = useState(0);
   const [isOmegaOnly, setIsOmegaOnly] = useState(false);
+  const [startTime, setStartTime] = useState(null);
   const [lastNumberTime, setLastNumberTime] = useState(null);
   const [tick, setTick] = useState(0);
   const consoleRef = useRef(null);
@@ -36,8 +37,9 @@ function PrimeBlackUncommons() {
     setResults(["> Starting experiment..."]);
     setFoundCount(0);
     setIsRunning(true);
+    setStartTime(Date.now()); // Record start time
     const chunkSize = 10000;
-    processChunk(0, chunkSize); // Start at 0
+    processChunk(0, chunkSize);
   };
 
   const downloadCSV = () => {
@@ -195,6 +197,11 @@ function PrimeBlackUncommons() {
         </span>
         <button onClick={downloadCSV} disabled={isRunning || foundCount === 0}>[Download CSV]</button>
         <Link to="/" className="console-link">[Back]</Link>
+        {startTime && (
+          <span className="time-elapsed">
+            Elapsed: {Math.floor((Date.now() - startTime) / 1000)}s
+          </span>
+        )}
       </div>
     </div>
   );

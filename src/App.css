@@ -83,6 +83,11 @@
   margin: 0 10px;
 }
 
+.time-elapsed {
+  color: #0f0;
+  margin-left: 10px;
+}
+
 @keyframes blink {
   50% { opacity: 0; }
 }
