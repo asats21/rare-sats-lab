@@ -82,7 +82,7 @@ function PrimeBlackUncommons() {
       let uncommon = getBlockUncommon(block);
       let blackSat = Math.floor(uncommon) - 1;
       let blackBlock = block - 1;
-      if (isPrime(blackSat) && (!isOmegaOnly || isOmega(blackSat))) {
+      if ((!isOmegaOnly || isOmega(blackSat)) && isPrime(blackSat)) {
         const epoch = Math.floor(blackBlock / BLOCKS);
         const rewardSats = getRewardForEpoch(epoch);
         const rewardDisplay = rewardSats >= 0.1 * 1e8
