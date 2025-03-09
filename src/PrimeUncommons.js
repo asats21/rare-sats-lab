@@ -59,7 +59,7 @@ function PrimeUncommons() {
     setIsRunning(true);
     setStartTime(Date.now());
     setCurrentBlock(0);
-    const chunkSize = 10000;
+    const chunkSize = 20000;
     processChunk(0, chunkSize);
   };
 

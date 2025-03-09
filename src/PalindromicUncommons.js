@@ -1,5 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'; // Added for the back button
+import { getRewardForEpoch } from './getRewardForEpoch';
 import './App.css';
 
 const BLOCKS = 210000;
@@ -37,7 +38,7 @@ function ConsoleNumbers() {
     setResults(["> Starting experiment..."]);
     setFoundCount(0);
     setIsRunning(true);
-    const chunkSize = 20000;
+    const chunkSize = 4000;
     processChunk(0, chunkSize);
   };
 
@@ -91,19 +92,18 @@ function ConsoleNumbers() {
   };
 
   function getBlockUncommon(block) {
-    let reward = 50 * 1e8;
     let totalSats = 0;
     let currentBlock = 0;
     for (let i = 0; i < MAX_HALVINGS; i++) {
       let halvingBlocks = BLOCKS;
       if (block < currentBlock + halvingBlocks) {
+        const reward = getRewardForEpoch(i);
         return totalSats + (block - currentBlock) * reward;
       }
-      totalSats += halvingBlocks * reward;
+      totalSats += halvingBlocks * getRewardForEpoch(i);
       currentBlock += halvingBlocks;
-      reward /= 2;
     }
-    return 0;
+    return totalSats;
   }
 
   function palindromeCheck(num) {

@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { getRewardForEpoch } from './getRewardForEpoch';
-import __wbg_init, { is_prime, batch_is_prime } from './is_prime_wasm';
+import __wbg_init, { batch_is_prime } from './is_prime_wasm';
 import './App.css';
 
 const BLOCKS = 210000;
@@ -60,7 +60,7 @@ function PrimeBlackUncommons() {
     setIsRunning(true);
     setStartTime(Date.now());
     setCurrentBlock(0);
-    const chunkSize = 50000;
+    const chunkSize = 100000;
     processChunk(0, chunkSize);
   };
 
