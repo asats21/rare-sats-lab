@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'; // Added for the back button
 import './App.css';
 
@@ -16,7 +16,7 @@ function ConsoleNumbers() {
   const consoleRef = useRef(null);
 
   // Auto-scroll to the bottom when results update
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (consoleRef.current) {
       consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
     }
