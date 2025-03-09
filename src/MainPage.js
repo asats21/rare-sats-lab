@@ -27,7 +27,7 @@ function MainPage() {
           <span className="blinking-cursor">_</span>
         </div>
         <div className="console-line console-footer">
-          > (C) Joking, there isn't one. TBH it’s more (Bitcoin) art than app. Have fun.
+          > (C) Just kidding, there isn’t one. Honestly, it’s more of a little art experiment than an app. Have fun.
         </div>
       </div>
     </div>
