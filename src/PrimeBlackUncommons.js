@@ -60,7 +60,7 @@ function PrimeBlackUncommons() {
     setIsRunning(true);
     setStartTime(Date.now());
     setCurrentBlock(0);
-    const chunkSize = 10000;
+    const chunkSize = 2000;
     processChunk(0, chunkSize);
   };
 

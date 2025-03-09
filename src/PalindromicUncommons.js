@@ -37,7 +37,7 @@ function ConsoleNumbers() {
     setResults(["> Starting experiment..."]);
     setFoundCount(0);
     setIsRunning(true);
-    const chunkSize = 10000;
+    const chunkSize = 2000;
     processChunk(0, chunkSize);
   };
 
