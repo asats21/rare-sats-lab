@@ -69,6 +69,12 @@ pub fn is_prime(n: f64) -> bool {
     true
 }
 
+// Batch primality check function
+#[wasm_bindgen]
+pub fn batch_is_prime(numbers: Vec<f64>) -> Vec<u8> {
+    numbers.into_iter().map(|n| is_prime(n) as u8).collect()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

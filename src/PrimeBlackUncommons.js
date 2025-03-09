@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { getRewardForEpoch } from './getRewardForEpoch';
-import __wbg_init, { is_prime } from './is_prime_wasm'; // Add this line
+import __wbg_init, { is_prime, batch_is_prime } from './is_prime_wasm';
 import './App.css';
 
 const BLOCKS = 210000;
@@ -60,7 +60,7 @@ function PrimeBlackUncommons() {
     setIsRunning(true);
     setStartTime(Date.now());
     setCurrentBlock(0);
-    const chunkSize = 2000;
+    const chunkSize = 50000;
     processChunk(0, chunkSize);
   };
 
@@ -78,20 +78,38 @@ function PrimeBlackUncommons() {
 
   const processChunk = (startBlock, chunkSize) => {
     const endBlock = Math.min(startBlock + chunkSize, TOTAL_BLOCKS);
-    let newPrimes = [];
+
+    let blackSats = [];
+    let blockData = [];
+    
     for (let block = startBlock; block < endBlock; block++) {
       let uncommon = getBlockUncommon(block);
       let blackSat = Math.floor(uncommon) - 1;
       let blackBlock = block - 1;
-      if ((!isOmegaOnly || isOmega(blackSat)) && isPrime(blackSat)) {
-        const epoch = Math.floor(blackBlock / BLOCKS);
+      blackSats.push(blackSat);
+      blockData.push({ blackSat, blackBlock });
+    }
+    
+    // Check all numbers at once using batch_is_prime
+    let primeResults = batch_is_prime(blackSats);
+    
+    let newPrimes = [];
+    for (let i = 0; i < primeResults.length; i++) {
+      if (primeResults[i] && (!isOmegaOnly || isOmega(blockData[i].blackSat))) {
+        const epoch = Math.floor(blockData[i].blackBlock / BLOCKS);
         const rewardSats = getRewardForEpoch(epoch);
         const rewardDisplay = rewardSats >= 0.1 * 1e8
           ? `${rewardSats / 1e8} BTC`
           : `${rewardSats} sats`;
-        newPrimes.push({ blackSat, block: blackBlock, epoch, reward: rewardDisplay });
+        newPrimes.push({
+          blackSat: blockData[i].blackSat,
+          block: blockData[i].blackBlock,
+          epoch,
+          reward: rewardDisplay
+        });
       }
     }
+
     if (newPrimes.length > 0) {
       setResults((prev) => [...prev, ...newPrimes]);
       setFoundCount((prev) => prev + newPrimes.length);
@@ -127,12 +145,6 @@ function PrimeBlackUncommons() {
 
   function isOmega(sat_num) {
     return Number.isInteger((sat_num + 1) / 1e8);
-  }
-
-  function isPrime(n) {
-    if (!isWasmLoaded) return false;
-    if (n < 0) return false;
-    return is_prime(n);
   }
 
   const toggleOmega = () => {
