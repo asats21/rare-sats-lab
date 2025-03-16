@@ -11,6 +11,7 @@ function RodarmorNames() {
   const [isPrimeChecked, setIsPrimeChecked] = useState(false);
   const [isPizzaChecked, setIsPizzaChecked] = useState(false);
   const [isPalindromeChecked, setIsPalindromeChecked] = useState(false);
+  const [foundCount, setFoundCount] = useState(0);
   const [displayedNames, setDisplayedNames] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
 
@@ -55,6 +56,7 @@ function RodarmorNames() {
   // Handle the "Run" button click
   const handleRun = () => {
     setDisplayedNames([]); // Reset the list
+    setFoundCount(0);
     setIsRunning(true);    // Start the display process
   };
 
@@ -69,6 +71,7 @@ function RodarmorNames() {
           clearInterval(interval);
           setIsRunning(false);
           const count = filteredNames.length;
+          setFoundCount(count);
           return [...prev, `> Experiment finished. Found ${count} names.`];
         }
         const batchSize = 100;
@@ -86,6 +89,18 @@ function RodarmorNames() {
       consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
     }
   }, [displayedNames]);
+
+  const downloadCSV = () => {
+    const csvContent = "data:text/csv;charset=utf-8," 
+      + filteredNames.map(([num, name]) => `${num},${name}`).join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "rodarmor_names.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   // Render the console-like UI
   return (
@@ -115,6 +130,7 @@ function RodarmorNames() {
         <span onClick={() => setIsPizzaChecked(!isPizzaChecked)} className="console-toggle">
           {isPizzaChecked ? '[X]' : '[_]'} Pizza
         </span>
+        <button onClick={downloadCSV} disabled={isRunning || foundCount === 0}>[Download CSV]</button>
         <Link to="/" className="console-link">[Back]</Link>
       </div>
     </div>
