@@ -10,11 +10,17 @@ function RodarmorNames() {
   const [isWasmLoaded, setIsWasmLoaded] = useState(false);
   const [isPrimeChecked, setIsPrimeChecked] = useState(false);
   const [isPizzaChecked, setIsPizzaChecked] = useState(false);
+  const [isPalindromeChecked, setIsPalindromeChecked] = useState(false);
   const [displayedNames, setDisplayedNames] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
 
   // Reference for the console output div to manage scrolling
   const consoleRef = useRef(null);
+
+  const isPalindrome = (str) => {
+    const lowerStr = str.toLowerCase();
+    return lowerStr === lowerStr.split('').reverse().join('');
+  };
 
   // Load WASM module when component mounts
   useEffect(() => {
@@ -37,13 +43,14 @@ function RodarmorNames() {
 
   // Filter names based on checkbox states
   const filteredNames = useMemo(() => {
-    if (!isWasmLoaded) return []; // Wait for WASM to load
+    if (!isWasmLoaded) return [];
     return sortedNames.filter(([num, name]) => {
-      const isPrimeNum = isPrimeChecked ? is_prime(num) : true;
-      const isPizzaNum = isPizzaChecked ? isPizza(Number(num)) : true;
-      return isPrimeNum && isPizzaNum;
+        const isPrimeNum = isPrimeChecked ? is_prime(num) : true;
+        const isPizzaNum = isPizzaChecked ? isPizza(Number(num)) : true;
+        const isPalindromeName = isPalindromeChecked ? isPalindrome(num) : true;
+        return isPrimeNum && isPizzaNum && isPalindromeName;
     });
-  }, [sortedNames, isPrimeChecked, isPizzaChecked, isWasmLoaded]);
+  }, [sortedNames, isPrimeChecked, isPizzaChecked, isPalindromeChecked, isWasmLoaded]);
 
   // Handle the "Run" button click
   const handleRun = () => {
@@ -101,6 +108,9 @@ function RodarmorNames() {
         <button onClick={handleRun} disabled={isRunning}>[Start]</button>
         <span onClick={() => setIsPrimeChecked(!isPrimeChecked)} className="console-toggle">
           {isPrimeChecked ? '[X]' : '[_]'} Prime
+        </span>
+        <span onClick={() => setIsPalindromeChecked(!isPalindromeChecked)} className="console-toggle">
+            {isPalindromeChecked ? '[X]' : '[_]'} Palindrome
         </span>
         <span onClick={() => setIsPizzaChecked(!isPizzaChecked)} className="console-toggle">
           {isPizzaChecked ? '[X]' : '[_]'} Pizza
