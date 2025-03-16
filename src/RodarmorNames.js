@@ -57,19 +57,20 @@ function RodarmorNames() {
 
     const interval = setInterval(() => {
       setDisplayedNames((prev) => {
-        const nextIndex = prev.length;
+        const nextIndex = prev.filter(item => Array.isArray(item)).length;
         if (nextIndex >= filteredNames.length) {
           clearInterval(interval);
           setIsRunning(false);
-          return prev;
+          const count = filteredNames.length;
+          return [...prev, `> Experiment finished. Found ${count} names.`];
         }
-        const batchSize = 100; // Add 100 names at a time
+        const batchSize = 100;
         const nextBatch = filteredNames.slice(nextIndex, nextIndex + batchSize);
         return [...prev, ...nextBatch];
       });
-    }, 100); // Add names every 100ms
+    }, 100);
 
-    return () => clearInterval(interval); // Cleanup on unmount or when done
+    return () => clearInterval(interval);
   }, [isRunning, filteredNames]);
 
   // Auto-scroll to the bottom when displayedNames updates
@@ -86,9 +87,9 @@ function RodarmorNames() {
         <div className="console-line console-header">
           > Rodarmor Names
         </div>
-        {displayedNames.map(([num, name]) => (
-          <div key={num.toString()} className="console-line">
-            > {name} ({num.toString()})
+        {displayedNames.map((item, index) => (
+          <div key={index} className="console-line">
+            > {typeof item === 'string' ? item : `${item[1]} (${item[0]})`}
           </div>
         ))}
         <div className="console-line">
