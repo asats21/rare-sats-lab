@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { isPrime } from './isPrime.js';
 import { isPaliblock } from './isPaliblock';
+import { getBlock } from './getBlock';
 import './App.css';
 
 function PerfectPalinceptions() {
@@ -86,13 +87,16 @@ function PerfectPalinceptions() {
         if (!statsOnly) {
           subgroup.forEach(num => {
             const fullString = num.toString();
+            let formatted = fullString;
             if (splitNumbers) {
               const k = m / n; // Sub-palindrome length
-              const formatted = fullString.match(new RegExp(`.{1,${k}}`, 'g')).join('-');
-              results.push(formatted);
-            } else {
-              results.push(fullString);
+              formatted = fullString.match(new RegExp(`.{1,${k}}`, 'g')).join('-');
             }
+            if (paliblockOnly) {
+              const block = getBlock(num);
+              formatted = `${formatted} [${block}]`;
+            }
+            results.push(formatted);
           });
         }
         results.push(`In subgroup, perfect palinceptions found: ${subgroup.length}`);

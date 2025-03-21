@@ -1,6 +1,8 @@
 import { getRewardForEpoch } from './getRewardForEpoch';
 
 export function getBlock(sat_num) {
+    sat_num = Number(sat_num);
+
     const BLOCKS = 210000; // Number of blocks per halving epoch
 
     let startSats = 0;     // Cumulative satoshis mined up to the current epoch
