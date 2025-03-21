@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { isPrime } from './isPrime.js';
 import { isPaliblock } from './isPaliblock';
 import { getBlock } from './getBlock';
+import { is2Digits, is3Digits } from './digits';
 import './App.css';
 
 function PerfectPalinceptions() {
@@ -18,6 +19,8 @@ function PerfectPalinceptions() {
   const [splitNumbers, setSplitNumbers] = useState(false);
   const [paliblockOnly, setPaliblockOnly] = useState(false);
   const [primeOnly, setPrimeOnly] = useState(false);
+  const [twoDigitsOnly, setTwoDigitsOnly] = useState(false);
+  const [threeDigitsOnly, setThreeDigitsOnly] = useState(false);
   const [output, setOutput] = useState([]);
 
   // Helper function to generate palindromes
@@ -76,7 +79,9 @@ function PerfectPalinceptions() {
 
           if (num >= START && num <= END && !seenNumbers.has(fullString)) {
             if ((!primeOnly || (primeOnly && isPrime(num))) && 
-                (!paliblockOnly || (paliblockOnly && isPaliblock(num)))) {
+                (!paliblockOnly || (paliblockOnly && isPaliblock(num))) &&
+                (!twoDigitsOnly || (twoDigitsOnly && is3Digits(num))) &&
+                (!threeDigitsOnly || (threeDigitsOnly && is2Digits(num)))) {
               seenNumbers.add(fullString);
               subgroup.push(num);
             }
@@ -163,11 +168,23 @@ function PerfectPalinceptions() {
         <div className="console-line">> Sattributes:</div>
         <div className="console-line">
           > <span 
+              className={`console-toggle ${!twoDigitsOnly ? 'disabled' : ''}`}
+              onClick={() => setTwoDigitsOnly(!twoDigitsOnly)}
+            >
+              [{twoDigitsOnly ? 'X' : ' '}] 3D
+          </span>
+          <span 
+              className={`console-toggle ${!threeDigitsOnly ? 'disabled' : ''}`}
+              onClick={() => setThreeDigitsOnly(!threeDigitsOnly)}
+            >
+              [{threeDigitsOnly ? 'X' : ' '}] 2D
+          </span>
+          <span 
               className={`console-toggle ${!paliblockOnly ? 'disabled' : ''}`}
               onClick={() => setPaliblockOnly(!paliblockOnly)}
             >
               [{paliblockOnly ? 'X' : ' '}] Paliblock
-            </span>
+          </span>
           <span 
               className={`console-toggle ${!primeOnly ? 'disabled' : ''}`}
               onClick={() => setPrimeOnly(!primeOnly)}
