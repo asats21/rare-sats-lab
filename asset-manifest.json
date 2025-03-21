@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/rare-sats-lab/static/css/main.4e2d778e.css",
-    "main.js": "/rare-sats-lab/static/js/main.74c0b70f.js",
+    "main.css": "/rare-sats-lab/static/css/main.f140a376.css",
+    "main.js": "/rare-sats-lab/static/js/main.0dbdb6a2.js",
     "index.html": "/rare-sats-lab/index.html",
-    "main.4e2d778e.css.map": "/rare-sats-lab/static/css/main.4e2d778e.css.map",
-    "main.74c0b70f.js.map": "/rare-sats-lab/static/js/main.74c0b70f.js.map"
+    "main.f140a376.css.map": "/rare-sats-lab/static/css/main.f140a376.css.map",
+    "main.0dbdb6a2.js.map": "/rare-sats-lab/static/js/main.0dbdb6a2.js.map"
   },
   "entrypoints": [
-    "static/css/main.4e2d778e.css",
-    "static/js/main.74c0b70f.js"
+    "static/css/main.f140a376.css",
+    "static/js/main.0dbdb6a2.js"
   ]
 }
