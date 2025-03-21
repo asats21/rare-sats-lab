@@ -12,6 +12,7 @@ function PerfectPalinceptions() {
   const [totalLengths, setTotalLengths] = useState({ 12: true, 14: true, 15: true, 16: true });
   const [subPaliLengths, setSubPaliLengths] = useState({ 3: false, 4: false, 5: false, 6: false, 7: false, 8: false });
   const [statsOnly, setStatsOnly] = useState(false);
+  const [splitNumbers, setSplitNumbers] = useState(false);
   const [output, setOutput] = useState([]);
 
   // Helper function to generate palindromes
@@ -76,7 +77,16 @@ function PerfectPalinceptions() {
 
         subgroup.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
         if (!statsOnly) {
-          subgroup.forEach(num => results.push(num.toString()));
+          subgroup.forEach(num => {
+            const fullString = num.toString();
+            if (splitNumbers) {
+              const k = m / n; // Sub-palindrome length
+              const formatted = fullString.match(new RegExp(`.{1,${k}}`, 'g')).join('-');
+              results.push(formatted);
+            } else {
+              results.push(fullString);
+            }
+          });
         }
         results.push(`In subgroup, perfect palinceptions found: ${subgroup.length}`);
         mTotal += subgroup.length;
@@ -146,6 +156,14 @@ function PerfectPalinceptions() {
               onClick={() => setStatsOnly(!statsOnly)}
             >
               [{statsOnly ? 'X' : ' '}] Stats Only
+            </span>
+        </div>
+        <div className="console-line">
+          > <span 
+              className={`console-toggle ${!splitNumbers ? 'disabled' : ''}`}
+              onClick={() => setSplitNumbers(!splitNumbers)}
+            >
+              [{splitNumbers ? 'X' : ' '}] Split number for readability
             </span>
         </div>
         <div className="controls">
