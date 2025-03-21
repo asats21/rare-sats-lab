@@ -12,6 +12,9 @@ function MainPage() {
           > Experiments:
         </div>
         <div className="console-line">
+          > <Link to="/perfect-palinceptions" className="console-link">[Perfect Palinceptions]</Link> - Explore perfect palindromic satoshis.
+        </div>
+        <div className="console-line">
           > <Link to="/palindromic-uncommons" className="console-link">[Palindromic Uncommons]</Link> - Explore uncommon satoshis with palindromic properties.
         </div>
         <div className="console-line">

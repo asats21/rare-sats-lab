@@ -106,3 +106,37 @@
     background: #000; /* Cover any overlap */
   }
 }
+
+/* Perfect Palinceptions Page styling */
+
+.console-vertical {
+  background-color: #000;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row; /* Changed to row for side-by-side layout */
+}
+
+.console-output-vertical {
+  flex: 3 1 auto; /* Takes more space */
+  max-height: 100vh;
+  overflow-y: auto;
+  padding: 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  color: #0f0;
+}
+
+.options-menu {
+  flex: 1 1 auto; /* Takes less space */
+  max-height: 100vh;
+  overflow-y: auto;
+  padding: 20px;
+  border-left: 1px solid #0f0;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  color: #0f0;
+}
+
+/* Cover any overlap */
