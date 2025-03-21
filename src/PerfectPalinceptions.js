@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { isPrime } from './isPrime.js'; // Adjust the path if necessary
 import './App.css';
 
 function PerfectPalinceptions() {
@@ -13,6 +14,7 @@ function PerfectPalinceptions() {
   const [subPaliLengths, setSubPaliLengths] = useState({ 3: false, 4: false, 5: false, 6: false, 7: false, 8: false });
   const [statsOnly, setStatsOnly] = useState(false);
   const [splitNumbers, setSplitNumbers] = useState(false);
+  const [primeOnly, setPrimeOnly] = useState(false);
   const [output, setOutput] = useState([]);
 
   // Helper function to generate palindromes
@@ -70,8 +72,10 @@ function PerfectPalinceptions() {
           const num = BigInt(fullString);
 
           if (num >= START && num <= END && !seenNumbers.has(fullString)) {
-            seenNumbers.add(fullString);
-            subgroup.push(num);
+            if (!primeOnly || (primeOnly && isPrime(num))) {
+              seenNumbers.add(fullString);
+              subgroup.push(num);
+            }
           }
         }
 
@@ -149,6 +153,15 @@ function PerfectPalinceptions() {
               </span>
           </div>
         ))}
+        <div className="console-line">> Sattributes:</div>
+        <div className="console-line">
+          > <span 
+              className={`console-toggle ${!primeOnly ? 'disabled' : ''}`}
+              onClick={() => setPrimeOnly(!primeOnly)}
+            >
+              [{primeOnly ? 'X' : ' '}] Prime
+            </span>
+        </div>
         <div className="console-line">> Other:</div>
         <div className="console-line">
           > <span 
