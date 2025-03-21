@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { isPrime } from './isPrime.js'; // Adjust the path if necessary
+import { isPrime } from './isPrime.js';
+import { isPaliblock } from './isPaliblock';
 import './App.css';
 
 function PerfectPalinceptions() {
@@ -14,6 +15,7 @@ function PerfectPalinceptions() {
   const [subPaliLengths, setSubPaliLengths] = useState({ 3: false, 4: false, 5: false, 6: false, 7: false, 8: false });
   const [statsOnly, setStatsOnly] = useState(false);
   const [splitNumbers, setSplitNumbers] = useState(false);
+  const [paliblockOnly, setPaliblockOnly] = useState(false);
   const [primeOnly, setPrimeOnly] = useState(false);
   const [output, setOutput] = useState([]);
 
@@ -72,7 +74,8 @@ function PerfectPalinceptions() {
           const num = BigInt(fullString);
 
           if (num >= START && num <= END && !seenNumbers.has(fullString)) {
-            if (!primeOnly || (primeOnly && isPrime(num))) {
+            if ((!primeOnly || (primeOnly && isPrime(num))) && 
+                (!paliblockOnly || (paliblockOnly && isPaliblock(num)))) {
               seenNumbers.add(fullString);
               subgroup.push(num);
             }
@@ -156,6 +159,12 @@ function PerfectPalinceptions() {
         <div className="console-line">> Sattributes:</div>
         <div className="console-line">
           > <span 
+              className={`console-toggle ${!paliblockOnly ? 'disabled' : ''}`}
+              onClick={() => setPaliblockOnly(!paliblockOnly)}
+            >
+              [{paliblockOnly ? 'X' : ' '}] Paliblock
+            </span>
+          <span 
               className={`console-toggle ${!primeOnly ? 'disabled' : ''}`}
               onClick={() => setPrimeOnly(!primeOnly)}
             >
